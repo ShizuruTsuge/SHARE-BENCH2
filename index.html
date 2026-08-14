@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SHARE BENCH</title>
+<style>
+:root{--green:#78b58e;--green2:#a8d5b7;--light:#eff9f1;--dark:#315c45;--text:#33443a;--cream:#fffdf9;--yellow:#fff7d8;--peach:#fff0e7;--blue:#edf7fb}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#f3faf5,#fffaf3);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP","Yu Gothic",sans-serif;line-height:1.7}
+.phone{max-width:430px;min-height:100vh;margin:auto;background:rgba(255,253,249,.96);box-shadow:0 0 35px #315c4515;overflow:hidden}
+header{padding:20px 22px 10px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;letter-spacing:2px;color:var(--dark);font-size:19px}.back{border:0;background:none;font-size:25px;color:var(--dark)}
+main{padding:18px 22px 40px;animation:pageIn .45s ease both}.center{text-align:center}.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:35px}
+.leaf{font-size:60px;margin-bottom:20px;animation:float 3.2s ease-in-out infinite}.hero .title{animation:logoIn .9s cubic-bezier(.2,.8,.2,1) both}.hero .tag{animation:fadeUp .8s .18s ease both}.hero .sub{animation:fadeUp .8s .3s ease both}.hero .btn{animation:buttonIn .8s .45s cubic-bezier(.2,1.3,.4,1) both}.title{font-size:32px;letter-spacing:3px;font-weight:900;color:var(--dark);margin:0}.tag{font-size:18px;margin:14px 0 34px;font-weight:700}.sub{color:#68756d;line-height:1.8}
+.btn{width:100%;border:0;border-radius:20px;padding:19px 18px;background:var(--green);color:white;font-size:18px;font-weight:800;cursor:pointer;margin-top:12px;box-shadow:0 7px 16px #78b58e35;transition:transform .18s ease,box-shadow .18s ease,background .18s ease}.btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px #78b58e40}.btn:active{transform:scale(.98)}
+.btn.alt{background:white;color:var(--dark);border:2px solid #d9e7dc;box-shadow:none}.grid{display:grid;gap:16px}.card{background:white;border:1px solid #e1ebe3;border-radius:23px;padding:21px;box-shadow:0 7px 18px #3042380c;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease;border-left:6px solid var(--green2)}.card:hover{transform:translateY(-3px);box-shadow:0 12px 24px #30423816}.icon{font-size:31px}.card h3{margin:7px 0 5px;color:var(--dark)}.small{font-size:13px;color:#718078;line-height:1.6}
+h1{font-size:26px;color:var(--dark);margin:8px 0 18px}h2{color:var(--dark)}.pill{display:inline-block;padding:7px 12px;border-radius:999px;background:var(--light);color:var(--dark);font-weight:800;font-size:13px}
+.weather{background:linear-gradient(135deg,#fff8d9,#fff0cf);border-radius:26px;padding:25px;text-align:center;box-shadow:0 8px 20px #a06b0010}.temp{font-size:48px;font-weight:900;color:var(--dark)}.notice{margin-top:18px;background:#fff;border-radius:20px;padding:18px;text-align:left;border:1px solid #f0e2b9}.notice b{color:#a06b00}.info{background:white;border-radius:20px;padding:20px;border:1px solid #e1ebe3;margin-bottom:14px;box-shadow:0 5px 15px #30423808}.info h3{margin:0 0 7px;color:var(--dark)}.person{display:flex;gap:14px;align-items:center}.avatar{width:58px;height:58px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:28px}.person .btn{margin-left:auto;width:auto;padding:11px 17px;margin-top:0}.safe{background:var(--light);padding:16px;border-radius:18px;font-size:14px;line-height:1.8;border:1px solid #dcefe0}.success{text-align:center;padding:35px 10px}.check{font-size:65px;animation:pop .6s cubic-bezier(.2,1.5,.4,1) both}.muted{color:#718078}
+@keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes pop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+@keyframes logoIn{from{opacity:0;transform:translateY(18px) scale(.94);letter-spacing:8px}to{opacity:1;transform:none;letter-spacing:3px}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes buttonIn{from{opacity:0;transform:translateY(18px) scale(.92)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="phone">
+<header><div class="logo">SHARE BENCH</div><button class="back" onclick="back()" aria-label="戻る">‹</button></header>
+<main id="app"></main>
+</div>
+<script>
+const app=document.getElementById('app');
+const historyStack=[];
+function go(fn){historyStack.push(app.innerHTML);fn()}
+function back(){if(historyStack.length)app.innerHTML=historyStack.pop();else home()}
+function home(){historyStack.length=0;app.innerHTML=`
+<section class="hero center">
+<div class="leaf">🌿</div><h1 class="title">SHARE BENCH</h1>
+<div class="tag">ひと休みから、つながりを。</div>
+<p class="sub">ベンチから、地域とつながろう。<br>いつもの休憩を、小さな出会いのきっかけに。</p>
+<button class="btn" onclick="menu()">はじめる</button>
+</section>`}
+function menu(){go(()=>app.innerHTML=`
+<h1>今日はどうしますか？</h1><p class="muted">知りたい情報や、つながりたい人を選んでください。</p>
+<div class="grid">
+<div class="card" onclick="weather()"><div class="icon">☀️</div><h3>天気・暑さ情報</h3><div class="small">今日の天気、気温、暑さへの注意を確認</div></div>
+<div class="card" onclick="local()"><div class="icon">📍</div><h3>地域情報</h3><div class="small">近くのイベント・お店・施設などを見る</div></div>
+<div class="card" onclick="people()"><div class="icon">💬</div><h3>話し相手を呼ぶ</h3><div class="small">本人確認済みのボランティアを探す</div></div>
+</div>`)}
+function weather(){go(()=>app.innerHTML=`
+<h1>☀️ 今日の天気・暑さ</h1>
+<div class="weather"><div class="pill">今日の〇〇地域</div><div style="font-size:45px;margin:14px">☀️</div><div class="temp">32℃</div><div>晴れ　／　体感 34℃</div></div>
+<div class="notice"><b>⚠️ 今日の注意！</b><p><strong>熱中症に注意してください。</strong></p><p>💧 こまめに水分をとりましょう<br>🧢 日差しを避けましょう<br>🪑 無理せず休憩しましょう</p></div>
+<button class="btn alt" onclick="back()">メニューに戻る</button>`)}
+const infos=[
+["🎆","夏祭り開催！","8月○日　○○公園","地域のみんなで楽しめる夏祭りが開催されます。"],
+["🎨","地域イベント","8月○日　○○公民館","地域の人が参加できるイベントです。"],
+["☕","新しいお店がOPEN！","○○駅から徒歩5分","近くに新しいお店がオープンしました。"],
+["🏥","健康イベント","○月○日　○○センター","地域の健康づくりに関するイベントです。"]
+];
+function local(){go(()=>app.innerHTML=`
+<h1>📍 地域情報</h1><p class="muted">近くの気になる情報を選んでください。</p>
+${infos.map((x,i)=>`<div class="info" onclick="detail(${i})"><h3>${x[0]} ${x[1]}</h3><div class="small">${x[2]}</div><div style="margin-top:8px;color:var(--green);font-weight:800">詳しく見る ›</div></div>`).join('')}<button class="btn alt" onclick="menu()">メニューに戻る</button>`)}
+function detail(i){go(()=>{let x=infos[i];app.innerHTML=`<span class="pill">地域情報</span><h1>${x[0]} ${x[1]}</h1><div class="info"><p><b>📅 日時</b><br>${x[2]}</p><p style="line-height:1.8">${x[3]}</p><p><b>📍 場所</b><br>○○公園・○○施設</p></div><button class="btn">地図を見る</button><button class="btn alt" onclick="back()">一覧に戻る</button>`})}
+const peopleData=[
+["🧑","田中さん","14:00〜16:00","日常のお話・地域のお話"],
+["👩","佐藤さん","14:30〜17:00","趣味・日常のお話"],
+["👨","鈴木さん","15:00〜17:30","地域のおすすめのお話"]
+];
+function people(){go(()=>app.innerHTML=`
+<h1>💬 話し相手を探す</h1><p class="muted">本人確認・事前登録済みのボランティアです。</p>
+${peopleData.map((p,i)=>`<div class="info person"><div class="avatar">${p[0]}</div><div style="flex:1"><h3>${p[1]}</h3><div class="small">⭐ 本人確認済み<br>🕐 ${p[2]}<br>💬 ${p[3]}</div></div><button class="btn" onclick="confirmCall(${i})">呼ぶ</button></div>`).join('')}
+<div class="safe">🛡️ 安全のため、利用ルールを守ってご利用ください。困ったときは通報機能を利用できます。</div><button class="btn alt" onclick="menu()">メニューに戻る</button>`)}
+function confirmCall(i){go(()=>{let p=peopleData[i];app.innerHTML=`
+<div class="center"><span class="pill">呼び出し確認</span><h1>${p[0]} ${p[1]}</h1></div>
+<div class="info"><p>⭐ 本人確認済み</p><p>🕐 約30分の会話</p><p>📍 SHARE BENCH ○○公園</p><p>💬 ${p[3]}</p></div>
+<p class="center">この方を呼びますか？</p>
+<button class="btn" onclick="called(${i})">呼ぶ</button>
+<button class="btn alt" onclick="back()">キャンセル</button>`})}
+function called(i){let p=peopleData[i];historyStack.length=0;app.innerHTML=`
+<div class="success"><div class="check">✓</div><h1>呼び出しました！</h1><p>${p[1]}さんに連絡しました。</p><p class="muted">到着まで少しお待ちください。</p>
+<button class="btn" onclick="menu()">メニューへ</button></div>`}
+home();
+</script>
+</body>
+</html>
